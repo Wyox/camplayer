@@ -19,6 +19,7 @@ class BackGround(object):
 
     # Backgrounds behind video
     NOLINK_1X1  = "nolink_1x1.png"
+    NOLINK_1X2  = "nolink_1x2.png"
     NOLINK_2X2  = "nolink_2x2.png"
     NOLINK_3X3  = "nolink_3x3.png"
     NOLINK_4X4  = "nolink_4x4.png"
@@ -34,6 +35,7 @@ class BackGround(object):
 
         _map = ({
             1: cls.NOLINK_1X1,
+            2: cls.NOLINK_1X2,
             4: cls.NOLINK_2X2,
             6: cls.NOLINK_1P5,
             7: cls.NOLINK_3P4,
@@ -239,7 +241,13 @@ class BackGroundManager(object):
             if filename == image:
                 LOG.DEBUG(cls._MODULE, "setting icon '%s' visible for display '%i" % (filename, display_idx))
                 cls._proc_icons[display_idx].stdin.write(str(idx).encode('utf-8'))
-                cls._proc_icons[display_idx].stdin.flush()
+                try:
+                    cls._proc_icons[display_idx].stdin.flush()
+                except (BrokenPipeError, IOError):
+                    print ('BrokenPipeError caught, tried to flush icon', file = sys.stderr)
+
+
+
 
         cls.active_icon[display_idx] = filename
 

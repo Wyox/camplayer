@@ -32,8 +32,11 @@ chmod 755 $DESTPATH_BIN
 # --- Install the required distribution packages -----
 # ----------------------------------------------------
 
-echo "Installing required distribution packages"
-apt-get update
+if [ ! -e /usr/bin/pip3 ] || [ ! -e /usr/bin/ffprobe ] || [ ! -e /usr/bin/omxplayer ]; then
+  echo "Installing required distribution packages"
+  apt-get update
+fi
+
 
 if [ ! -e /usr/bin/pip3 ]; then
     apt-get -y install python3-pip
@@ -67,11 +70,14 @@ systemctl disable camplayer.service
 # ---------------------- pipng -----------------------
 # ----------------------------------------------------
 
-echo "Installing and building pipng"
-git clone https://github.com/raspicamplayer/pipng.git
-cd ./pipng/ && make && make install
-cd ../
-rm -rf pipng
+if [ ! -e /usr/local/bin/pipng ]; then
+    echo "Installing and building pipng"
+    git clone https://github.com/raspicamplayer/pipng.git
+    cd ./pipng/ && make && make install
+    cd ../
+    rm -rf pipng
+fi
+
 
 # --------------------- Done! ------------------------
 # ----------------------------------------------------

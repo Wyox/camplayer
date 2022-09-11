@@ -10,6 +10,7 @@ import time
 #   - Devices older than model 2
 # Source: https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
 pi_revisions = {
+    "100000d" : {"model": "1B",         "supported": True, "dual_hdmi": False, "hevc": False},
     "9000c1" : {"model": "Zero W",      "supported": True, "dual_hdmi": False, "hevc": False},
     "a01040" : {"model": "Zero W",      "supported": True, "dual_hdmi": False, "hevc": False},
     "a01041" : {"model": "2B",          "supported": True, "dual_hdmi": False, "hevc": False},
